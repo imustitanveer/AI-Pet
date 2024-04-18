@@ -1,0 +1,8 @@
+streamlit
+opencv-python
+Pillow
+torch
+transformers
+numpy
+facenet-pytorch
+deepface
