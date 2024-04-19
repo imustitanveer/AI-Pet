@@ -8,6 +8,7 @@ from facenet_pytorch import MTCNN, InceptionResnetV1
 from deepface import DeepFace
 import time
 
+
 # Load models and utilities outside of the function calls to avoid reloading them repeatedly
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 mtcnn = MTCNN(keep_all=True, device=device)
@@ -153,7 +154,7 @@ def continuous_emotion_detection():
 
 def detect_emotion():
     # Call the continuous_emotion_detection function to get the dominant emotion
-    dominant_emotion = continuous_emotion_detection()
+    emotion = continuous_emotion_detection()
 
     # Define responses based on the dominant emotion
     responses = {
@@ -163,9 +164,12 @@ def detect_emotion():
     }
 
     # Check if the dominant emotion is one of the keys in the responses dictionary
-    if dominant_emotion in responses:
+    if emotion in responses:
         # Return the appropriate response for the detected emotion
-        bot_output = responses[dominant_emotion]
+        bot_output = responses[emotion]
+        return bot_output
+    else:
+        exit
 
 
 def chat(user_input):
@@ -194,36 +198,43 @@ def chat(user_input):
 def main_page():
     st.markdown("# Woof Woof! I've Been Waiting to Play with You!")
     st.image("dog1.gif", use_column_width=True)
-    chat_history = []
+    
+    
+    if "chat_history" not in st.session_state:
+        st.session_state["chat_history"] = []
+
 
     # Text input for user message
+    prompt_response = st.empty()
     user_input = st.text_input("Type your message here:", key="user_input")
     send_button = st.button("Send", key="send_button")
 
     if send_button and user_input:
         bot_output = chat(user_input)
-        chat_history.append(("You", user_input))
-        chat_history.append(("Your Pet", bot_output))
+        prompt_response.text(bot_output)
+        st.session_state["chat_history"].append(("👶", user_input))
+        st.session_state["chat_history"].append(("🐶", bot_output))
+        
 
         # Check for emotion detection opportunity
-        if len(chat_history) >= 5:
+        if len(st.session_state["chat_history"]) >= 5:
             emotion_response = detect_emotion()
-            chat_history.append(("Your Pet", emotion_response))
-
-    # Display chat history
-    if chat_history:
-        for speaker, message in reversed(chat_history):
-            st.text(f"{speaker}: {message}")
+            prompt_response.text(emotion_response)
+            st.session_state["chat_history"].append(("🐶", emotion_response))
 
     # Sidebar to display chat history
     st.sidebar.markdown("# Chat History")
-    for speaker, message in chat_history:
+    for speaker, message in st.session_state["chat_history"]:
         st.sidebar.text(f"{speaker}: {message}")
 
 
 def main():
-    # Initially check if the owner is present
-    owner_present = is_owner_present()
+    if "owner_present_checked" not in st.session_state:
+        # Initially check if the owner is present
+        owner_present = is_owner_present()
+        st.session_state["owner_present_checked"] = True
+    else:
+        owner_present = True 
 
     if owner_present:
         # Directly go to the main page if owner is recognized
@@ -237,6 +248,7 @@ def main():
         else:
             st.markdown("# Sorry, I don't talk to strangers.")
             st.image("notouch.png")
+
 
 if __name__ == "__main__":
     main()
