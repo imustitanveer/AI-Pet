@@ -13,16 +13,16 @@ Welcome to the AI Pet repository! This project aims to create a virtual pet powe
 The AI Pet employs a sophisticated system architecture, integrating various AI technologies to create a seamless and intuitive user experience.
 
 ### Architecture Diagram
-![Architecture Diagram](diagrams/architecture-diagram.png)
+![Architecture Diagram](Diagrams/architechture-diagram.png)
 
 ### Data Flow Diagram
-![Data Flow Diagram](diagrams/dataflow-diagram.png)
+![Data Flow Diagram](Diagrams/DataFlow-Diagram.png)
 
 ### Sequence Diagram
-![Sequence Diagram](diagrams/sequence-diagram.png)
+![Sequence Diagram](Diagrams/sequence-diagram.png)
 
 ### Use Case Diagram
-![Use Case Diagram](diagrams/usecase-diagram.png)
+![Use Case Diagram](Diagrams/use-case-diagram.png)
 
 ## Web App
 
@@ -46,10 +46,10 @@ To experience the AI pet, follow these steps:
 ## Screenshots
 
 ### Main Chat Screen
-![Main Chat Screen](screenshots/Screenshot1.png)
+![Main Chat Screen](Screenshot1.png)
 
 ### Do Not Recognize Owner/Add Owner Screen
-![Do Not Recognize Owner/Add Owner Screen](screenshots/Screenshot2.png)
+![Do Not Recognize Owner/Add Owner Screen](Screenshot2.png)
 
 ## Contributing
 
