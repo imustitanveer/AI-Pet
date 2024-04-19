@@ -215,6 +215,11 @@ def main_page():
         for speaker, message in reversed(chat_history):
             st.text(f"{speaker}: {message}")
 
+    # Sidebar to display chat history
+    st.sidebar.markdown("# Chat History")
+    for speaker, message in chat_history:
+        st.sidebar.text(f"{speaker}: {message}")
+
 
 def main():
     # Initially check if the owner is present
